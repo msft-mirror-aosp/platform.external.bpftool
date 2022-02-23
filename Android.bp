@@ -1,0 +1,30 @@
+
+cc_binary_host {
+    name: "bpftool",
+    srcs: [
+        "src/*.c",
+        "src/kernel/bpf/disasm.c",
+    ],
+    exclude_srcs: [
+        "src/jit_disasm.c",
+    ],
+    local_include_dirs: [
+        "include",
+        "include/uapi",
+        "src/kernel/bpf"
+    ],
+    static_libs: [
+        "libbpf",
+        "libcap",
+        "libelf",
+        "libz",
+    ],
+    cflags: [
+        "-DBPFTOOL_WITHOUT_SKELETONS",
+        "-DBPFTOOL_VERSION=\"5.16.0-c446fdacb10d\"",
+        "-DUSE_LIBCAP",
+        "-Wno-missing-field-initializers",
+        "-Wno-pointer-arith",
+        "-Wno-unused-parameter",
+    ]
+}
