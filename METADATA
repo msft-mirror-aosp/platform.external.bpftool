@@ -9,11 +9,11 @@ third_party {
     type: GIT
     value: "https://github.com/libbpf/bpftool.git"
   }
-  version: "51d4a12c69c7339f60813b04fc9d0fd6154792a6"
+  version: "66c1c8b51826fc4cd0641e5b99d54f469a11f726"
   license_type: RESTRICTED
   last_upgrade_date {
-    year: 2022
-    month: 2
-    day: 10
+    year: 2023
+    month: 10
+    day: 16
   }
 }
