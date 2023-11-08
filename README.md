@@ -19,7 +19,7 @@ BPF/bpftool usage and questions
 
 Please check out [the manual pages](docs) for documentation about bpftool. A
 number of example invocations are also displayed in [this blog
-post](https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf-next.git/tree/tools/bpf/bpftool).
+post](https://qmonnet.github.io/whirl-offload/2021/09/23/bpftool-features-thread/).
 
 All general BPF questions, including kernel functionality, bpftool features and
 usage, should be sent to bpf@vger.kernel.org mailing list. You can subscribe to
@@ -100,6 +100,46 @@ displayed by passing `V=1`:
 $ cd src
 $ make V=1
 ```
+
+Additional compilation flags can be passed to the command line if required. For
+example, we can create a static build with the following commands:
+
+```console
+$ cd src
+$ EXTRA_CFLAGS=--static make
+```
+
+Note that to use the LLVM disassembler with static builds, we need a static
+version of the LLVM library installed on the system:
+
+1.  Download a precompiled LLVM release or build it locally.
+
+    - Download the appropriate
+      [release of LLVM](https://releases.llvm.org/download.html) for your
+      platform, for example on x86_64 with LLVM 15.0.0:
+
+      ```console
+      $ curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.0/clang+llvm-15.0.0-x86_64-linux-gnu-rhel-8.4.tar.xz
+      $ tar xvf clang+llvm-15.0.0-x86_64-linux-gnu-rhel-8.4.tar.xz
+      $ mv clang+llvm-15.0.0-x86_64-linux-gnu-rhel-8.4 llvm_build
+      ```
+
+    - Alternatively, clone and build the LLVM libraries locally.
+
+      ```console
+      $ git clone https://github.com/llvm/llvm-project.git
+      $ mkdir llvm_build
+      $ cmake -S llvm-project/llvm -B llvm_build -DCMAKE_BUILD_TYPE=Release
+      $ make -j -C llvm_build llvm-config llvm-libraries
+      ```
+
+2.  Build bpftool with `EXTRA_CFLAGS` set to `--static`, and by passing the
+    path to the relevant `llvm-config`.
+
+    ```console
+    $ cd bpftool
+    $ LLVM_CONFIG=../../llvm_build/bin/llvm-config EXTRA_CFLAGS=--static make -j -C src
+    ```
 
 ### Build bpftool's man pages
 
