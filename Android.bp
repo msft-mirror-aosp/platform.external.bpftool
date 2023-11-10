@@ -19,6 +19,7 @@ license {
 
 cc_binary {
     name: "bpftool",
+    defaults: ["elfutils_transitive_defaults"],
     host_supported: true,
     srcs: [
         "src/*.c",
