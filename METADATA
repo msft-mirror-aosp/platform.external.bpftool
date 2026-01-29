@@ -14,6 +14,7 @@ third_party {
   identifier {
     type: "Git"
     value: "https://github.com/libbpf/bpftool.git"
-    version: "v7.4.0"
+    version: "1c586e0c4c8dccf866eef472c795b32c1a553e7e"
+    closest_version: "v7.4.0"
   }
 }
